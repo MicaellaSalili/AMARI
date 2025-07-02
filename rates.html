@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMARI Urban Escape - Rates</title>
+    <link rel="icon" type="image/png" href="/images/logo.jpg">
+    <link rel="stylesheet" href="/css/rates.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                    <img src="/images/logo.jpg" alt="AMARI Urban Escape Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#rooms">Rooms & Amenities</a></li>
+                <li><a href="rates.html" class="active">Rates</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+            <a href="rates.html" class="book-now-btn">BOOK NOW</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <p class="hero-subtitle">A Magnificent Retreat amidst Inspired landscapes</p>
+            <h2 class="hero-main-title">AMARI Urban Escape</h2>
+            <div class="toggle-container">
+                <button class="toggle-btn active" id="weekdays-btn" onclick="toggleRates('weekdays')">Weekdays</button>
+                <button class="toggle-btn" id="weekends-btn" onclick="toggleRates('weekends')">Weekends</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="rates-section">
+        <div class="container">
+            <div class="rates-grid" id="rates-grid">
+                <!-- Day Tour -->
+                <div class="rate-card">
+                    <div class="rate-header">
+                        <h3 class="rate-title">DAY TOUR</h3>
+                        <div class="rate-price" id="day-tour-price">₱ 12,500</div>
+                    </div>
+                    <div class="package-details">
+                        <h4>Package Details</h4>
+                        <ul class="features-list">
+                            <li>8AM - 5PM</li>
+                            <li>20 pax maximum</li>
+                            <li>₱ 350 per additional pax</li>
+                            <li>Exclusive use of resort & karaoke</li>
+                            <li>Infinity pool and jacuzzi</li>
+                            <li>Kitchen and Dinning Area</li>
+                            <li>Portable griller</li>
+                            <li>Outdoor shower</li>
+                            <li>Outdoor toilet and bath</li>
+                            <li>Two fully air-conditioned rooms</li>
+                            <li>Tables and Chairs</li>
+                            <li>10-car parking space</li>
+                            <li>Free use of WiFi</li>
+                        </ul>
+                    </div>
+                    <button class="reserve-btn" onclick="window.location.href='book.html?package=day-tour'">Reserve Now</button>
+                </div>
+
+                <!-- Overnight -->
+                <div class="rate-card">
+                    <div class="rate-header">
+                        <h3 class="rate-title">OVERNIGHT</h3>
+                        <div class="rate-price" id="overnight-price">₱ 16,500</div> 
+                    </div>
+                    <div class="package-details">
+                        <h4>Package Details</h4>
+                        <ul class="features-list">
+                            <li>3PM - 12NN</li>
+                            <li>20 pax maximum</li>
+                            <li>₱ 350 per additional pax</li>
+                            <li>Exclusive use of resort & karaoke</li>
+                            <li>Infinity pool and jacuzzi</li>
+                            <li>Kitchen and Dinning Area</li>
+                            <li>Portable griller</li>
+                            <li>Outdoor shower</li>
+                            <li>Outdoor toilet and bath</li>
+                            <li>Two fully air-conditioned rooms</li>
+                            <li>Tables and Chairs</li>
+                            <li>10-car parking space</li>
+                            <li>Free use of WiFi</li>
+                        </ul>
+                    </div>
+                    <button class="reserve-btn" onclick="window.location.href='book.html?package=overnight'">Reserve Now</button>
+                </div>
+
+                <!-- Night Tour -->
+                <div class="rate-card">
+                    <div class="rate-header">
+                        <h3 class="rate-title">NIGHT TOUR</h3>
+                        <div class="rate-price" id="night-tour-price">₱ 13,500</div>
+                    </div>
+                    <div class="package-details">
+                        <h4>Package Details</h4>
+                        <ul class="features-list">
+                            <li>8PM - 6AM</li>
+                            <li>20 pax maximum</li>
+                            <li>₱ 350 per additional pax</li>
+                            <li>Exclusive use of resort & karaoke</li>
+                            <li>Infinity pool and jacuzzi</li>
+                            <li>Kitchen and Dinning Area</li>
+                            <li>Portable griller</li>
+                            <li>Outdoor shower</li>
+                            <li>Outdoor toilet and bath</li>
+                            <li>Two fully air-conditioned rooms</li>
+                            <li>Tables and Chairs</li>
+                            <li>10-car parking space</li>
+                            <li>Free use of WiFi</li>
+                        </ul>
+                    </div>
+                    <button class="reserve-btn" onclick="window.location.href='book.html?package=night-tour'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        AMARI
+                        <span>URBAN ESCAPE</span>
+                    </div>
+                    <p>A Magnificent Retreat amidst Inspired landscapes in Pandi, Bulacan. 
+                        Experience luxury and serenity in our beautiful urban escape.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>COMPANY</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>HELP CENTER</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Guest Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>GET IN TOUCH</h3>
+                    <ul>
+                        <li>Phone: +63 915 111 1875</li>
+                        <li>Email: amariurbanescape@gmail.com</li>
+                        <li><a href="https://maps.app.goo.gl/Y8iR91NCkCxV3ueD7">Location: Malibong Matanda, Pandi, Bulacan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AMARI Urban Escape | All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+<div class="chat-btn" id="chatBtn" title="Chat with us on Messenger"></div>
+<script src="/js/rates.js"></script>
+</body>
+</html>

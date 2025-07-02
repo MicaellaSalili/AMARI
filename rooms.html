@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMARI Urban Escape - Rooms & Amenities</title>
+  <link rel="icon" type="image/png" href="/images/logo.jpg">
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 15px 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+
+    .logo-img {
+        height: 80px;
+        width: auto;
+        align-self: start;
+    }
+
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+    }
+
+    .nav-link {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+    }
+
+    .nav-link:hover {
+        color: #2c3e50;
+    }
+
+    .book-now-btn {
+        background: #2c3e50;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    .book-now-btn:hover {
+        background: #34495e;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #2c3e50;
+        margin: 3px 0;
+        transition: 0.3s;
+        border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(44,62,80,0.15);
+      letter-spacing: 1px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.12);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      height: 240px;
+      display: flex;
+      align-items: stretch;
+    }
+    .gallery-item:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 16px 48px rgba(44,62,80,0.18);
+    }
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover .gallery-image {
+      transform: scale(1.07);
+    }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(44,62,80,0.85), transparent 80%);
+      color: #fff;
+      padding: 18px 16px 12px 16px;
+      transition: background 0.3s;
+    }
+    .gallery-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+    .gallery-description {
+      font-size: 0.95rem;
+      opacity: 0.92;
+      line-height: 1.4;
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(44,62,80,0.92);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: 3% auto;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(44,62,80,0.25);
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.97);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    .modal-image {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .modal-info {
+      padding: 28px 24px 24px 24px;
+      text-align: center;
+    }
+    .modal-info h2 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+      font-size: 1.5rem;
+    }
+    .modal-info p {
+      color: #444;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .close {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      background: rgba(44,62,80,0.7);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 10;
+    }
+    .close:hover {
+      background: #764ba2;
+      transform: scale(1.1);
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .modal-image {
+        height: 220px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
+      .section-title {
+        font-size: 1.2rem;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .gallery-item {
+        height: 180px;
+      }
+      .modal-content {
+        max-width: 98vw;
+      }
+      .modal-image {
+        height: 140px;
+      }
+    }
+    /* Floating Chat Button */
+    .chat-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #2c3e50 url('/images/messenger.svg') no-repeat center/60%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(44,62,80,0.18);
+      cursor: pointer;
+      z-index: 2000;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .chat-btn:hover {
+      background-color: #764ba2;
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                    <img src="/images/logo.jpg" alt="AMARI Urban Escape Logo" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="rooms.html" class="nav-link">Rooms & Amenities</a></li>
+                <li><a href="rates.html" class="nav-link">Rates</a></li>
+                <li><a href="#contact" class="nav-link">Contact Us</a></li>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                <li><a href="rates.html" class="book-now-btn">BOOK NOW</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+    <div class="header">
+      <h1>AMARI Urban Escape</h1>
+      <p>Luxurious Accommodations & Premium Amenities Experience</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Rooms & Amenities Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openModal('modal1')">
+          <img src="/images/room1.jpg" alt="Deluxe Room" class="gallery-image" />
+          <div class="gallery-overlay">
+            <div class="gallery-title">Deluxe Room</div>
+            <div class="gallery-description">Air-conditioned room with queen beds, TV, and private T&B.</div>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openModal('modal2')">
+          <img src="/images/room2.jpg" alt="Family Room" class="gallery-image" />
+          <div class="gallery-overlay">
+            <div class="gallery-title">Family Room</div>
+            <div class="gallery-description">Spacious family room with bunk beds and garden view.</div>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openModal('modal3')">
+          <img src="/images/pool.jpg" alt="Infinity Pool" class="gallery-image" />
+          <div class="gallery-overlay">
+            <div class="gallery-title">Infinity Pool</div>
+            <div class="gallery-description">Swim and relax in our stunning infinity pool and jacuzzi.</div>
+          </div>
+        </div>
+        <!-- Add more .gallery-item as needed -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal1')">&times;</span>
+      <img src="/images/room1.jpg" alt="Deluxe Room" class="modal-image" />
+      <div class="modal-info">
+        <h2>Deluxe Room</h2>
+        <p>Enjoy a luxurious stay in our air-conditioned deluxe room with two queen beds, TV, and private T&B.</p>
+      </div>
+    </div>
+  </div>
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal2')">&times;</span>
+      <img src="/images/room2.jpg" alt="Family Room" class="modal-image" />
+      <div class="modal-info">
+        <h2>Family Room</h2>
+        <p>Perfect for families, this spacious room features bunk beds, a relaxing ambiance, and a beautiful garden view.</p>
+      </div>
+    </div>
+  </div>
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal3')">&times;</span>
+      <img src="/images/pool.jpg" alt="Infinity Pool" class="modal-image" />
+      <div class="modal-info">
+        <h2>Infinity Pool</h2>
+        <p>Swim and unwind in our infinity pool and jacuzzi, surrounded by lush landscapes and serene views.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Chat Button -->
+  <div class="chat-btn" id="chatBtn" title="Chat with us on Messenger"></div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    // Messenger chat button
+    document.getElementById('chatBtn').addEventListener('click', function() {
+      window.open('https://m.me/amariurbanescape', '_blank');
+    });
+  </script>
+</body>
+</html>
