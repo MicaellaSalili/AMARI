@@ -138,7 +138,7 @@ nav {
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 8px 20px;
   border-radius: 50px;
-  margin-top: 80px;
+  margin-top: 30px;
   margin-bottom: 30px;
   font-size: 0.9rem;
   font-weight: 500;
@@ -162,22 +162,6 @@ nav {
   font-weight: 300;
   line-height: 1.6;
   animation: fadeInUp 0.8s ease-out 0.6s both;
-}
-
-.hero-divider {
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.5));
-  margin: 0 auto 25px;
-  animation: fadeInUp 0.8s ease-out 0.8s both;
-}
-
-.hero-description {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  font-weight: 300;
-  font-style: italic;
-  animation: fadeInUp 0.8s ease-out 1s both;
 }
 
 /* About Section */
@@ -1072,24 +1056,8 @@ footer {
     grid-template-columns: 1fr;
   }
   
-  .values-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
   .hero-title {
-    font-size: 3.2rem;
-  }
-  
-  .mission-highlights {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    font-size: 2.8rem;
   }
 }
 
@@ -1099,23 +1067,19 @@ footer {
   }
   
   .main-content {
-    padding-top: 90px;
+    padding-top: 0;
   }
   
-  .hero {
-    height: 60vh;
+  .about-section {
+    padding-top: 120px;
   }
   
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .section-title {
-    font-size: 2.2rem;
+    font-size: 1rem;
   }
 
   .about-content,
@@ -1123,23 +1087,19 @@ footer {
     padding: 35px 25px;
   }
   
-  .values-section {
-    padding: 60px 0;
-  }
-  
-  .value-item {
-    padding: 30px 20px;
+  .section-title {
+    font-size: 2rem;
   }
   
   .mission-section,
   .team-message-section,
   .cta-section {
-    padding: 50px 30px;
+    padding: 40px 30px;
   }
 
   .mission-title,
   .cta-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   .cta-buttons {
@@ -1148,8 +1108,7 @@ footer {
   }
 
   .cta-btn {
-    width: 250px;
-    justify-content: center;
+    width: 200px;
   }
 
   .footer-content {
@@ -1164,41 +1123,17 @@ footer {
     padding: 0 15px;
   }
   
-  .hero {
-    height: 50vh;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
-  }
-  
-  .section-number {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 1rem;
-  }
-  
-  .section-number::after {
-    width: 55px;
-    height: 55px;
-  }
-  
   .about-content,
   .features-section {
     padding: 25px 20px;
   }
   
-  .value-item {
-    padding: 25px 15px;
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
   }
   
   .story-item,
@@ -1209,12 +1144,7 @@ footer {
   .mission-section,
   .team-message-section,
   .cta-section {
-    padding: 40px 20px;
-  }
-  
-  .mission-title,
-  .cta-title {
-    font-size: 1.8rem;
+    padding: 30px 20px;
   }
 
   .footer-logo {
@@ -1223,19 +1153,6 @@ footer {
   
   .footer-section h3 {
     font-size: 1.1rem;
-  }
-  
-  .stats-grid {
-    padding: 20px;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-  
-  .highlight-item {
-    padding: 12px 20px;
-    font-size: 0.9rem;
   }
 }
 
