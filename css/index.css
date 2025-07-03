@@ -352,31 +352,60 @@ footer {
 }
 
 /* Floating Chat Button */
-.chat-btn {
+.floating-chat-btn {
     position: fixed;
     bottom: 30px;
     right: 30px;
     width: 60px;
     height: 60px;
-    background: #2c3e50;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #2c3e50 0%, #2e2b2b 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    z-index: 1000;
+    z-index: 99999;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: pulse 3s infinite, slideUpFadeIn 0.6s ease-out;
 }
 
-.chat-btn:hover {
+.floating-chat-btn:hover {
     transform: scale(1.1);
-    background: #34495e;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
 }
 
-.chat-btn::before {
-    content: '💬';
-    font-size: 24px;
+.floating-chat-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+    border-radius: 50%;
+}
+
+.floating-chat-btn:hover::before {
+    left: 100%;
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 /* Responsive Design */
@@ -433,6 +462,18 @@ footer {
         grid-template-columns: 1fr;
         text-align: center;
     }
+
+    .floating-chat-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .floating-chat-btn svg {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -451,6 +492,18 @@ footer {
     .gallery-grid,
     .experience-grid {
         grid-template-columns: 1fr;
+    }
+
+    .floating-chat-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-chat-btn svg {
+        width: 24px;
+        height: 24px;
     }
 }
 

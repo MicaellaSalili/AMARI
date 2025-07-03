@@ -79,13 +79,16 @@ document.querySelectorAll('.gallery-item, .experience-item').forEach((item, inde
     observer.observe(item);
 });
 
-// Chat button redirect to Facebook Messenger
+// Floating chat button functionality
 document.addEventListener('DOMContentLoaded', function() {
-  const chatBtn = document.getElementById('chatBtn');
-  if (chatBtn) {
-    chatBtn.style.cursor = 'pointer';
-    chatBtn.addEventListener('click', function() {
-      window.open('https://m.me/amariurbanescape', '_blank');
-    });
-  }
+    const chatBtn = document.getElementById('chatBtn');
+
+    // Floating chat button handler
+    if (chatBtn) {
+        chatBtn.addEventListener('click', function() {
+            // Open Facebook Messenger
+            const messengerUrl = 'https://m.me/amariurbanescape';
+            window.open(messengerUrl, '_blank');
+        });
+    }
 });
