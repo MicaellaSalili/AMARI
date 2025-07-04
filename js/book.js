@@ -125,9 +125,122 @@ document.getElementById('select-dates').addEventListener('click', () => {
 
 document.getElementById('confirm-reservation').addEventListener('click', () => {
   if (selectedCheckin && selectedCheckout) {
-    alert(`Reservation confirmed!\nPackage: Overnight (21 hours)\nCheck-in: ${formatDate(selectedCheckin)}\nCheck-out: ${formatDate(selectedCheckout)}\nPrice: ₱19,500`);
+    // Show the guest form
+    const guestForm = document.getElementById('guest-form');
+    const confirmBtn = document.getElementById('confirm-reservation');
+    
+    if (guestForm.style.display === 'none') {
+      guestForm.style.display = 'block';
+      confirmBtn.textContent = 'Submit Reservation';
+      confirmBtn.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Validate and submit the form
+      submitReservation();
+    }
   }
 });
+
+async function submitReservation() {
+  const form = document.getElementById('reservation-form');
+  const formData = new FormData(form);
+  
+  // Validate required fields
+  const guestName = formData.get('guestName')?.trim();
+  const email = formData.get('email')?.trim();
+  const phone = formData.get('phone')?.trim();
+  const numberOfGuests = formData.get('numberOfGuests');
+  
+  if (!guestName || !email || !phone || !numberOfGuests) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  
+  // Phone validation (basic)
+  const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+  if (!phoneRegex.test(phone)) {
+    alert('Please enter a valid phone number.');
+    return;
+  }
+  
+  // Get current package info
+  const params = new URLSearchParams(window.location.search);
+  const pkg = params.get('package') || 'overnight';
+  
+  const reservationData = {
+    guestName: guestName,
+    email: email,
+    phone: phone,
+    numberOfGuests: parseInt(numberOfGuests),
+    specialRequests: formData.get('specialRequests')?.trim() || '',
+    package: pkg,
+    checkinDate: selectedCheckin.toISOString().split('T')[0],
+    checkoutDate: selectedCheckout.toISOString().split('T')[0]
+  };
+  
+  try {
+    // Disable the button and show loading
+    const confirmBtn = document.getElementById('confirm-reservation');
+    const originalText = confirmBtn.textContent;
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Submitting...';
+    
+    const response = await fetch('/api/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reservationData)
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      // Show success message
+      alert(`Reservation submitted successfully!\n\nReservation ID: ${result.reservation.id}\nPackage: ${packages[pkg]?.title || pkg}\nCheck-in: ${formatDate(selectedCheckin)}\nCheck-out: ${formatDate(selectedCheckout)}\nGuest: ${guestName}\nTotal: ${packages[pkg]?.price || 'Contact for pricing'}\n\nWe will contact you soon to confirm your reservation.`);
+      
+      // Reset the form
+      resetBookingForm();
+    } else {
+      alert('Failed to submit reservation: ' + (result.message || 'Unknown error'));
+    }
+  } catch (error) {
+    console.error('Error submitting reservation:', error);
+    alert('Error submitting reservation. Please check your internet connection and try again.');
+  } finally {
+    // Re-enable the button
+    const confirmBtn = document.getElementById('confirm-reservation');
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = originalText;
+  }
+}
+
+function resetBookingForm() {
+  // Reset date selection
+  selectedCheckin = null;
+  selectedCheckout = null;
+  isSelectingCheckout = false;
+  document.getElementById('checkin-date').value = '';
+  document.getElementById('checkout-date').value = '';
+  
+  // Reset guest form
+  document.getElementById('reservation-form').reset();
+  document.getElementById('guest-form').style.display = 'none';
+  
+  // Reset button
+  const confirmBtn = document.getElementById('confirm-reservation');
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'Confirm Reservation';
+  
+  // Regenerate calendar
+  generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+}
 
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
@@ -260,13 +373,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Chat button redirect to Messenger
+// Floating chat button handler
 document.addEventListener('DOMContentLoaded', function() {
-  const chatBtn = document.getElementById('chatBtn');
-  if (chatBtn) {
-    chatBtn.style.cursor = 'pointer'; 
-    chatBtn.addEventListener('click', function() {
-      window.open('https://m.me/amariurbanescape', '_blank');
-    });
-  }
+    const chatBtn = document.getElementById('chatBtn');
+    if (chatBtn) {
+        chatBtn.addEventListener('click', function() {
+            // Open Facebook Messenger
+            const messengerUrl = 'https://m.me/amariurbanescape';
+            window.open(messengerUrl, '_blank');
+        });
+    }
 });
