@@ -1,394 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AMARI Urban Escape - Rooms & Amenities</title>
   <link rel="icon" type="image/png" href="/images/logo.jpg">
-  <style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        overflow-x: hidden;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    /* Header */
-    header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        padding: 15px 0;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-
-    .logo-img {
-        height: 80px;
-        width: auto;
-        align-self: start;
-    }
-
-    .nav-menu {
-        display: flex;
-        list-style: none;
-        gap: 2.5rem;
-        align-items: center;
-    }
-
-    .nav-link {
-        color: #2c3e50;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-        position: relative;
-    }
-
-    .nav-link:hover {
-        color: #2c3e50;
-    }
-
-    .book-now-btn {
-        background: #2c3e50;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.9rem;
-    }
-
-    .book-now-btn:hover {
-        background: #34495e;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        cursor: pointer;
-        padding: 5px;
-    }
-
-    .hamburger span {
-        width: 25px;
-        height: 3px;
-        background: #2c3e50;
-        margin: 3px 0;
-        transition: 0.3s;
-        border-radius: 2px;
-    }
-
-    .section-title {
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 30px;
-      color: #fff;
-      text-shadow: 2px 2px 8px rgba(44,62,80,0.15);
-      letter-spacing: 1px;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-    .gallery-item {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(44,62,80,0.12);
-      background: #fff;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      height: 240px;
-      display: flex;
-      align-items: stretch;
-    }
-    .gallery-item:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 16px 48px rgba(44,62,80,0.18);
-    }
-    .gallery-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .gallery-item:hover .gallery-image {
-      transform: scale(1.07);
-    }
-    .gallery-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(44,62,80,0.85), transparent 80%);
-      color: #fff;
-      padding: 18px 16px 12px 16px;
-      transition: background 0.3s;
-    }
-    .gallery-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin-bottom: 4px;
-      letter-spacing: 1px;
-    }
-    .gallery-description {
-      font-size: 0.95rem;
-      opacity: 0.92;
-      line-height: 1.4;
-    }
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(44,62,80,0.92);
-      backdrop-filter: blur(5px);
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content {
-      position: relative;
-      margin: 3% auto;
-      max-width: 600px;
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 16px 48px rgba(44,62,80,0.25);
-      animation: fadeIn 0.3s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.97);}
-      to { opacity: 1; transform: scale(1);}
-    }
-    .modal-image {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      background: #eee;
-    }
-    .modal-info {
-      padding: 28px 24px 24px 24px;
-      text-align: center;
-    }
-    .modal-info h2 {
-      margin-bottom: 10px;
-      color: #2c3e50;
-      font-size: 1.5rem;
-    }
-    .modal-info p {
-      color: #444;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .close {
-      position: absolute;
-      top: 18px;
-      right: 24px;
-      color: #fff;
-      font-size: 32px;
-      font-weight: bold;
-      cursor: pointer;
-      background: rgba(44,62,80,0.7);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 10;
-    }
-    .close:hover {
-      background: #764ba2;
-      transform: scale(1.1);
-    }
-    /* Responsive */
-    @media (max-width: 900px) {
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .modal-image {
-        height: 220px;
-      }
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-      .header h1 {
-        font-size: 2rem;
-      }
-      .section-title {
-        font-size: 1.2rem;
-      }
-      .gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .gallery-item {
-        height: 180px;
-      }
-      .modal-content {
-        max-width: 98vw;
-      }
-      .modal-image {
-        height: 140px;
-      }
-    }
-    /* Floating Chat Button */
-    .chat-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background: #2c3e50 url('/images/messenger.svg') no-repeat center/60%;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 16px rgba(44,62,80,0.18);
-      cursor: pointer;
-      z-index: 2000;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .chat-btn:hover {
-      background-color: #764ba2;
-      transform: scale(1.08);
-    }
-  </style>
+  <link rel="stylesheet" href="css/rooms.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#" class="logo">
-                    <img src="/images/logo.jpg" alt="AMARI Urban Escape Logo" class="logo-img">
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="rooms.html" class="nav-link">Rooms & Amenities</a></li>
-                <li><a href="rates.html" class="nav-link">Rates</a></li>
-                <li><a href="#contact" class="nav-link">Contact Us</a></li>
-                <li><a href="#about" class="nav-link">About Us</a></li>
-                <li><a href="rates.html" class="book-now-btn">BOOK NOW</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container">
-    <div class="header">
-      <h1>AMARI Urban Escape</h1>
-      <p>Luxurious Accommodations & Premium Amenities Experience</p>
-    </div>
+  <header>
+    <nav>
+      <a href="#" class="logo">
+        <img src="/images/logo.jpg" alt="AMARI Urban Escape Logo" class="logo-img">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="rooms.html" class="nav-link">Rooms & Amenities</a></li>
+        <li><a href="rates.html" class="nav-link">Rates</a></li>
+        <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="rates.html" class="book-now-btn">BOOK NOW</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="section">
-      <h2 class="section-title">Rooms & Amenities Gallery</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item" onclick="openModal('modal1')">
-          <img src="/images/room1.jpg" alt="Deluxe Room" class="gallery-image" />
-          <div class="gallery-overlay">
-            <div class="gallery-title">Deluxe Room</div>
-            <div class="gallery-description">Air-conditioned room with queen beds, TV, and private T&B.</div>
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>Premium Accommodations</span>
           </div>
+          <h1 class="hero-title">Rooms & Amenities</h1>
+          <p class="hero-subtitle">Discover our thoughtfully designed spaces where comfort meets elegance</p>
         </div>
-        <div class="gallery-item" onclick="openModal('modal2')">
-          <img src="/images/room2.jpg" alt="Family Room" class="gallery-image" />
-          <div class="gallery-overlay">
-            <div class="gallery-title">Family Room</div>
-            <div class="gallery-description">Spacious family room with bunk beds and garden view.</div>
-          </div>
-        </div>
-        <div class="gallery-item" onclick="openModal('modal3')">
-          <img src="/images/pool.jpg" alt="Infinity Pool" class="gallery-image" />
-          <div class="gallery-overlay">
-            <div class="gallery-title">Infinity Pool</div>
-            <div class="gallery-description">Swim and relax in our stunning infinity pool and jacuzzi.</div>
-          </div>
-        </div>
-        <!-- Add more .gallery-item as needed -->
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="rooms-section" id="rooms">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <h2 class="section-title">Our Accommodations</h2>
+          <p class="section-description">Carefully designed spaces that blend comfort with functionality, ensuring every guest enjoys a memorable experience</p>
+        </div>
+
+        <div class="rooms-grid">
+          <div class="room-item" onclick="openModal('modal1')">
+            <div class="room-image-container">
+              <img src="/images/master.jpg" alt="AC Room with Queen Beds" class="room-image">
+              <div class="room-overlay">
+                <div class="room-badge">Air-Conditioned</div>
+                <div class="room-title">Queen Size Beds Room</div>
+                <div class="room-description">Air-conditioned room with 2 Queen size beds with TV and T&B</div>
+                <div class="view-details-btn">View Details</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-item" onclick="openModal('modal2')">
+            <div class="room-image-container">
+              <img src="/images/double.jpg" alt="AC Room with Bunk Beds" class="room-image">
+              <div class="room-overlay">
+                <div class="room-badge">Air-Conditioned</div>
+                <div class="room-title">Double Bunk Beds Room</div>
+                <div class="room-description">Air-conditioned room with 2 Double sized bunk beds with pull out</div>
+                <div class="view-details-btn">View Details</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-item" onclick="openModal('modal3')">
+            <div class="room-image-container">
+              <img src="/images/living.jpg" alt="Living Area" class="room-image">
+              <div class="room-overlay">
+                <div class="room-badge">Common Area</div>
+                <div class="room-title">Living Area</div>
+                <div class="room-description">Spacious living area with chairs, tables and entertainment</div>
+                <div class="view-details-btn">View Details</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-item" onclick="openModal('modal4')">
+            <div class="room-image-container">
+              <img src="/images/kitchen.jpg" alt="Kitchen Area" class="room-image">
+              <div class="room-overlay">
+                <div class="room-badge">Fully Equipped</div>
+                <div class="room-title">Kitchen Area</div>
+                <div class="room-description">Kitchen area with basic cookwares and all appliances</div>
+                <div class="view-details-btn">View Details</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section class="amenities-section" id="amenities">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <h2 class="section-title">Premium Amenities</h2>
+          <p class="section-description">Experience our comprehensive range of facilities designed to enhance your comfort and convenience</p>
+        </div>
+
+        <div class="amenities-grid">
+          <div class="amenity-item" onclick="openModal('modal5')">
+            <div class="amenity-image-container">
+              <img src="/images/pool.jpg" alt="Infinity Pool" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">🏊‍♂️</div>
+                <div class="amenity-title">Infinity Pool</div>
+                <div class="amenity-description">Stunning infinity pool with relaxing views</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="amenity-item" onclick="openModal('modal6')">
+            <div class="amenity-image-container">
+              <img src="/images/pool top.jpg" alt="Jacuzzi" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">🏊‍♀️</div>
+                <div class="amenity-title">Jacuzzi</div>
+                <div class="amenity-description">Free use for 30 minutes - perfect for relaxation</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="amenity-item" onclick="openModal('modal7')">
+            <div class="amenity-image-container">
+              <img src="/images/kitchen.jpg" alt="Kitchen Area" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">👩‍🍳</div>
+                <div class="amenity-title">Full Kitchen</div>
+                <div class="amenity-description">Complete kitchen with basic cookware & appliances</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="amenity-item" onclick="openModal('modal8')">
+            <div class="amenity-image-container">
+              <img src="/images/trailer.jpg" alt="Videoke Entertainment" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">🎤</div>
+                <div class="amenity-title">Videoke System</div>
+                <div class="amenity-description">Sing your heart out with our professional videoke system</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="amenity-item" onclick="openModal('modal9')">
+            <div class="amenity-image-container">
+              <img src="/images/day.jpg" alt="Exclusive Resort Use" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">🏊‍♀️</div>
+                <div class="amenity-title">Exclusive Resort Use</div>
+                <div class="amenity-description">Private and exclusive use of the entire resort</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="amenity-item" onclick="openModal('modal10')">
+            <div class="amenity-image-container">
+              <img src="/images/parking_area.jpg" alt="Parking Area" class="amenity-image">
+              <div class="amenity-overlay">
+                <div class="amenity-icon">🚗</div>
+                <div class="amenity-title">Spacious Parking</div>
+                <div class="amenity-description">Parking area fits 9 to 10 cars comfortably</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <h2 class="section-title">Essential Features</h2>
+          <p class="section-description">Every detail thoughtfully considered to provide you with modern conveniences and comfort</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🛏️</div>
+            <h3>AC Room - Double Bunk Beds</h3>
+            <p>Air-conditioned room with 2 double sized bunk beds with pull out</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🛏️</div>
+            <h3>AC Room - Queen Beds</h3>
+            <p>Air-conditioned room with 2 queen size beds, TV and toilet & bath</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🔥</div>
+            <h3>Microwave Oven</h3>
+            <p>Modern microwave for quick meal preparation and reheating</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🧊</div>
+            <h3>Refrigerator</h3>
+            <p>Full-size refrigerator to keep your food and drinks fresh</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🍢</div>
+            <h3>Portable Griller</h3>
+            <p>Enjoy outdoor barbecue with our portable grilling equipment</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🔥</div>
+            <h3>Stove</h3>
+            <p>Complete stove for cooking your favorite meals</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">⛽</div>
+            <h3>Gas for Cooking</h3>
+            <p>Gas supply provided for all your cooking needs</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🍚</div>
+            <h3>Rice Cooker</h3>
+            <p>Convenient rice cooker for perfect rice every time</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🧊</div>
+            <h3>Air Cooler</h3>
+            <p>Additional cooling system for extra comfort</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🚿</div>
+            <h3>Outdoor Showers</h3>
+            <p>2 outdoor shower areas plus 1 outside toilet & bath</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">💦</div>
+            <h3>Water Dispenser</h3>
+            <p>Water dispenser with free one gallon purified water</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🪑</div>
+            <h3>Chairs & Tables</h3>
+            <p>Comfortable chairs and tables for dining and relaxation</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">📶</div>
+            <h3>WiFi</h3>
+            <p>High-speed WiFi internet access throughout the property</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">�</div>
+            <h3>Videoke System</h3>
+            <p>Professional videoke system for entertainment and family bonding</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">💨</div>
+            <h3>Cooling Systems</h3>
+            <p>2 ceiling fans and 2 stand fans for optimal air circulation</p>
+          </div>
+        </div>
+        
+        <!-- Add-ons Section -->
+        <div class="section-header" style="margin-top: 80px;">
+          <h3 class="section-title" style="font-size: 2rem;">Available Add-Ons</h3>
+          <p class="section-description">Enhance your stay with these optional extras</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🛏️</div>
+            <h3>Extra Mattress</h3>
+            <p>Additional comfortable mattress for extra guests</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🍻</div>
+            <h3>Corkage Fee</h3>
+            <p>Bring your own beverages with affordable corkage rates</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">⛷️</div>
+            <h3>Bouncy Slide</h3>
+            <p>Fun inflatable slide for kids and family entertainment</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🎪</div>
+            <h3>Camping Tent</h3>
+            <p>Outdoor camping experience with provided tent setup</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <div class="section-number">04</div>
+        <h2 class="cta-title">Ready to Experience AMARI?</h2>
+        <div class="cta-divider"></div>
+        <p class="cta-description">
+          Join us at AMARI Urban Escape where every detail is designed for your comfort and every moment is crafted for lasting memories.
+        </p>
+        <div class="cta-buttons">
+          <a href="rates.html" class="cta-btn primary">
+            <span>View Rates & Book</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="contact.html" class="cta-btn secondary">
+            <span>Contact Us</span>
+          </a>
+        </div>
+        <div class="cta-contact-info">
+          <p>Questions about accommodations? Call us at <strong>+63 915 111 1875</strong></p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Modals -->
   <div id="modal1" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal1')">&times;</span>
-      <img src="/images/room1.jpg" alt="Deluxe Room" class="modal-image" />
-      <div class="modal-info">
-        <h2>Deluxe Room</h2>
-        <p>Enjoy a luxurious stay in our air-conditioned deluxe room with two queen beds, TV, and private T&B.</p>
+      <div class="modal-body">
+        <img src="/images/2-Queen-size-bed.jpg" alt="AC Room with Queen Beds" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Air-Conditioned</div>
+          <h2>Queen Size Beds Room</h2>
+          <p>Air-conditioned room with 2 Queen size beds equipped with TV and toilet & bath. Perfect for families or groups seeking comfort and modern amenities.</p>
+          <ul class="modal-features">
+            <li>2 Queen size beds</li>
+            <li>Air conditioning</li>
+            <li>TV entertainment system</li>
+            <li>Private toilet & bath (T&B)</li>
+            <li>Modern fixtures and amenities</li>
+            <li>Comfortable bedding and pillows</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+
   <div id="modal2" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal2')">&times;</span>
-      <img src="/images/room2.jpg" alt="Family Room" class="modal-image" />
-      <div class="modal-info">
-        <h2>Family Room</h2>
-        <p>Perfect for families, this spacious room features bunk beds, a relaxing ambiance, and a beautiful garden view.</p>
+      <div class="modal-body">
+        <img src="/images/double.jpg" alt="AC Room with Bunk Beds" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Air-Conditioned</div>
+          <h2>Double Bunk Beds Room</h2>
+          <p>Air-conditioned room with 2 double sized bunk beds featuring pull out functionality. Ideal for larger groups and families with children.</p>
+          <ul class="modal-features">
+            <li>2 Double sized bunk beds</li>
+            <li>Pull out bed feature</li>
+            <li>Air conditioning</li>
+            <li>Space-efficient design</li>
+            <li>Comfortable mattresses</li>
+            <li>Perfect for groups and families</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+
   <div id="modal3" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal3')">&times;</span>
-      <img src="/images/pool.jpg" alt="Infinity Pool" class="modal-image" />
-      <div class="modal-info">
-        <h2>Infinity Pool</h2>
-        <p>Swim and unwind in our infinity pool and jacuzzi, surrounded by lush landscapes and serene views.</p>
+      <div class="modal-body">
+        <img src="/images/living.jpg" alt="Living Area" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Common Area</div>
+          <h2>Living Area</h2>
+          <p>Spacious living area with comfortable chairs and tables for dining and relaxation. Perfect for gathering with family and friends during your stay.</p>
+          <ul class="modal-features">
+            <li>Comfortable chairs and seating</li>
+            <li>Tables for dining and activities</li>
+            <li>Air conditioning and cooling fans</li>
+            <li>Entertainment area</li>
+            <li>Spacious layout for groups</li>
+            <li>Natural lighting and ambiance</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Floating Chat Button -->
-  <div class="chat-btn" id="chatBtn" title="Chat with us on Messenger"></div>
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal4')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/kitchen.jpg" alt="Kitchen Area" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Fully Equipped</div>
+          <h2>Kitchen Area</h2>
+          <p>Complete kitchen area with basic cookwares and all essential appliances. Everything you need to prepare delicious meals during your stay.</p>
+          <ul class="modal-features">
+            <li>Basic cookwares and utensils</li>
+            <li>Microwave oven</li>
+            <li>Refrigerator</li>
+            <li>Portable griller</li>
+            <li>Stove with gas for cooking</li>
+            <li>Rice cooker</li>
+            <li>Water dispenser with free gallon purified water</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = "flex";
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = "none";
-    }
-    // Messenger chat button
-    document.getElementById('chatBtn').addEventListener('click', function() {
-      window.open('https://m.me/amariurbanescape', '_blank');
-    });
-  </script>
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal5')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/pool.jpg" alt="Infinity Pool" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Premium Amenity</div>
+          <h2>Infinity Pool</h2>
+          <p>Dive into our stunning infinity pool with breathtaking views. Perfect for swimming, relaxation, and creating unforgettable memories with your loved ones.</p>
+          <ul class="modal-features">
+            <li>Beautiful infinity pool design</li>
+            <li>Crystal clear water with regular maintenance</li>
+            <li>Pool deck with comfortable seating</li>
+            <li>Perfect for swimming and water activities</li>
+            <li>Stunning views and photo opportunities</li>
+            <li>Pool safety equipment provided</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal6" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal6')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/pool top.jpg" alt="Jacuzzi" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Relaxation</div>
+          <h2>Jacuzzi</h2>
+          <p>Unwind in our luxurious jacuzzi with warm, bubbling water. Enjoy 30 minutes of free use to soothe your muscles and relax your mind.</p>
+          <ul class="modal-features">
+            <li>Free use for 30 minutes per stay</li>
+            <li>Warm, therapeutic water</li>
+            <li>Perfect for muscle relaxation</li>
+            <li>Intimate setting for couples</li>
+            <li>Adjacent to the pool area</li>
+            <li>Regular cleaning and maintenance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal7" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal7')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/kitchen.jpg" alt="Kitchen Area" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Amenity</div>
+          <h2>Full Kitchen Area</h2>
+          <p>Complete kitchen facilities with basic cookware for all your culinary needs. Cook your favorite meals and enjoy dining together with family and friends.</p>
+          <ul class="modal-features">
+            <li>Full-size refrigerator</li>
+            <li>Microwave oven for quick heating</li>
+            <li>Gas stove for cooking</li>
+            <li>Rice cooker for perfect rice</li>
+            <li>Basic cookware and utensils provided</li>
+            <li>Portable griller for outdoor BBQ</li>
+            <li>Water dispenser with free gallon of purified water</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal8" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal8')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/trailer.jpg" alt="Videoke" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Entertainment</div>
+          <h2>Videoke System</h2>
+          <p>Sing your heart out with our high-quality videoke system. Perfect for entertainment and bonding with family and friends during your stay.</p>
+          <ul class="modal-features">
+            <li>High-quality sound system</li>
+            <li>Wide selection of songs</li>
+            <li>Multiple microphones available</li>
+            <li>Perfect for group entertainment</li>
+            <li>Easy-to-use interface</li>
+            <li>Great for parties and celebrations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal9" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal9')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/day.jpg" alt="Exclusive Resort Use" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Premium</div>
+          <h2>Exclusive Resort Use</h2>
+          <p>Enjoy complete privacy and exclusivity with full resort access. Perfect for intimate gatherings, special occasions, and quality time with your group.</p>
+          <ul class="modal-features">
+            <li>Private and exclusive use of entire resort</li>
+            <li>No other guests during your stay</li>
+            <li>Perfect for special occasions</li>
+            <li>Complete privacy for your group</li>
+            <li>Access to all facilities</li>
+            <li>Ideal for intimate celebrations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal10" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal10')">&times;</span>
+      <div class="modal-body">
+        <img src="/images/parking_area.jpg" alt="Parking Area" class="modal-image">
+        <div class="modal-info">
+          <div class="modal-badge">Convenience</div>
+          <h2>Spacious Parking Area</h2>
+          <p>Convenient and secure parking space for your vehicles. Our spacious parking area can accommodate 9 to 10 cars comfortably.</p>
+          <ul class="modal-features">
+            <li>Accommodates 9-10 cars</li>
+            <li>Secure and well-lit parking area</li>
+            <li>Easy vehicle access</li>
+            <li>No additional parking fees</li>
+            <li>Safe and monitored area</li>
+            <li>Convenient location within the property</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            AMARI
+            <span>URBAN ESCAPE</span>
+          </div>
+          <p>A Magnificent Retreat amidst Inspired landscapes in Pandi, Bulacan. 
+            Experience luxury and serenity in our beautiful urban escape.</p>
+        </div>
+        <div class="footer-section">
+          <h3>COMPANY</h3>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>HELP CENTER</h3>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Guest Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>GET IN TOUCH</h3>
+          <ul>
+            <li>Phone: +63 915 111 1875</li>
+            <li>Email: amariurbanescape@gmail.com</li>
+            <li><a href="https://maps.app.goo.gl/Y8iR91NCkCxV3ueD7">Location: Malibong Matanda, Pandi, Bulacan</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 AMARI Urban Escape | All rights reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Button -->
+  <div class="floating-chat-btn" id="chatBtn" role="button" aria-label="Open chat" title="Chat with us!">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.15 2 11.2C2 14.1 3.26 16.7 5.29 18.4V22L8.85 20.2C9.84 20.5 10.9 20.7 12 20.7C17.52 20.7 22 16.55 22 11.5C22 6.45 17.52 2.3 12 2.3V2Z" fill="white"/>
+      <circle cx="8.5" cy="11.5" r="1.5" fill="#4267B2"/>
+      <circle cx="12" cy="11.5" r="1.5" fill="#4267B2"/>
+      <circle cx="15.5" cy="11.5" r="1.5" fill="#4267B2"/>
+    </svg>
+  </div>
+
+  <script src="js/rooms.js"></script>
 </body>
 </html>

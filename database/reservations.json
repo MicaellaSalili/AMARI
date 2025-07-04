@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1751586321537",
+    "guestName": "Micaella Salili",
+    "email": "salilimicaella@gmail.com",
+    "phone": "09513316622",
+    "numberOfGuests": 10,
+    "specialRequests": "Please gumana ka.",
+    "package": "day-tour",
+    "checkinDate": "2025-07-04",
+    "checkoutDate": "2025-07-06",
+    "createdAt": "2025-07-03T23:45:21.537Z",
+    "status": "pending"
+  },
+  {
+    "id": "1751589778882",
+    "guestName": "Ella Mae Lumawag",
+    "email": "cynxwebb@gmail.com",
+    "phone": "09285719747",
+    "numberOfGuests": 5,
+    "specialRequests": "Please Please Please",
+    "package": "overnight",
+    "checkinDate": "2025-07-13",
+    "checkoutDate": "2025-07-14",
+    "createdAt": "2025-07-04T00:42:58.882Z",
+    "status": "pending"
+  }
+]
