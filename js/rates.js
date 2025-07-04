@@ -62,8 +62,9 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Initialize animations
+// Initialize animations and chat button
 document.addEventListener('DOMContentLoaded', () => {
+    // Rate cards animation
     const cards = document.querySelectorAll('.rate-card');
     cards.forEach((card, index) => {
         card.style.opacity = '0';
@@ -71,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
         observer.observe(card);
     });
-});
 
-// Chat button redirect to Facebook Messenger
-document.addEventListener('DOMContentLoaded', function() {
-  const chatBtn = document.getElementById('chatBtn');
-  if (chatBtn) {
-    chatBtn.addEventListener('click', function() {
-      window.open('https://m.me/amariurbanescape', '_blank');
-    });
-  }
+    // Floating chat button handler
+    const chatBtn = document.getElementById('chatBtn');
+    if (chatBtn) {
+        chatBtn.addEventListener('click', function() {
+            // Open Facebook Messenger
+            const messengerUrl = 'https://m.me/amariurbanescape';
+            window.open(messengerUrl, '_blank');
+        });
+    }
 });
