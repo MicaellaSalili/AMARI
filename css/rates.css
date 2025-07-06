@@ -250,8 +250,9 @@ body {
 }
 
 .reserve-btn {
-    width: 100%;
-    background: #6c757d;
+    display: block;
+    width: auto;
+    background: #2c3e50;
     color: white;
     padding: 1rem;
     border: none;
@@ -260,6 +261,12 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
+    text-align: center;
+    text-decoration: none; /* Removes underline */
+    margin-top: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .reserve-btn:hover {
