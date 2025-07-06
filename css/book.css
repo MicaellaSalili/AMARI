@@ -12,22 +12,25 @@ body {
 }
 
 /* Header */
-.header {
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 0;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo-img {
@@ -36,21 +39,23 @@ body {
     align-self: start;
 }
 
-.nav-links {
+.nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 2.5rem;
+    align-items: center;
 }
 
-.nav-links a {
+.nav-link {
+    color: #2c3e50;
     text-decoration: none;
-    color: #333;
     font-weight: 500;
     transition: color 0.3s ease;
+    position: relative;
 }
 
-.nav-links a:hover {
-    color: #3498db;
+.nav-link:hover {
+    color: #2c3e50;
 }
 
 .book-now-btn {
@@ -72,11 +77,7 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.menu-icon {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
+
 
 /* Hero Section */
 .hero-section {
@@ -750,12 +751,8 @@ body {
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .nav-links {
+    .nav-menu {
         display: none;
-    }
-
-    .menu-icon {
-        display: block;
     }
 
     .hero-content h1 {
@@ -1050,41 +1047,6 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        top: 80px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 80px);
-        background: rgba(255, 255, 255, 0.98);
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 2rem;
-        padding-top: 3rem;
-        transition: left 0.3s ease;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-
     .hero h1 {
         font-size: 2.5rem;
     }
