@@ -2,6 +2,7 @@ let currentDate = new Date();
 let selectedCheckin = null;
 let selectedCheckout = null;
 let isSelectingCheckout = false;
+let bookedDates = []; // Store booked dates from server
 
 const monthNames = [
   "January", "February", "March", "April", "May", "June",
@@ -9,6 +10,29 @@ const monthNames = [
 ];
 
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// Fetch booked dates from server
+async function fetchBookedDates() {
+  try {
+    const response = await fetch('/api/booked-dates');
+    const data = await response.json();
+    
+    if (data.success) {
+      bookedDates = data.bookedDates;
+      console.log('Booked dates loaded:', bookedDates);
+    } else {
+      console.error('Failed to fetch booked dates:', data.message);
+    }
+  } catch (error) {
+    console.error('Error fetching booked dates:', error);
+  }
+}
+
+// Check if a date is booked
+function isDateBooked(date) {
+  const dateString = date.toISOString().split('T')[0];
+  return bookedDates.includes(dateString);
+}
 
 function generateCalendar(year, month) {
   const firstDay = new Date(year, month, 1);
@@ -49,7 +73,17 @@ function generateCalendar(year, month) {
       dayElement.classList.add('disabled');
       dayElement.style.pointerEvents = 'none';
       dayElement.style.opacity = '0.4';
-    } else {
+    } 
+    // Disable booked dates
+    else if (isDateBooked(currentDateObj)) {
+      dayElement.classList.add('booked');
+      dayElement.style.pointerEvents = 'none';
+      dayElement.style.opacity = '0.6';
+      dayElement.style.backgroundColor = '#ff6b6b';
+      dayElement.style.color = 'white';
+      dayElement.title = 'This date is already booked';
+    }
+    else {
       dayElement.addEventListener('click', () => selectDate(currentDateObj, dayElement));
     }
 
@@ -482,7 +516,14 @@ document.addEventListener('DOMContentLoaded', function() {
   updateSummaryDates();
 });
 
-generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+// Initialize calendar with booked dates
+async function initializeCalendar() {
+  await fetchBookedDates();
+  generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+}
+
+// Start the calendar initialization
+initializeCalendar();
 
 // --- PACKAGE LOGIC WITH WEEKDAY/WEEKEND PRICING ---
 const params = new URLSearchParams(window.location.search);

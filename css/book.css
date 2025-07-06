@@ -222,6 +222,34 @@ nav {
     color: white;
 }
 
+.calendar-day.booked {
+    background: #ff6b6b !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    position: relative;
+}
+
+.calendar-day.booked:hover {
+    background: #ff5252 !important;
+}
+
+.calendar-day.booked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+
+.calendar-day.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .date-inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -172,6 +172,45 @@ app.get('/api/reservations', requireAuth, (req, res) => {
     }
 });
 
+// READ - Get booked dates (Public endpoint for calendar)
+app.get('/api/booked-dates', (req, res) => {
+    try {
+        const reservations = readDatabase();
+        const bookedDates = [];
+        
+        // Filter reservations with confirmed or pending status
+        const activeReservations = reservations.filter(r => 
+            r.status === 'confirmed' || r.status === 'pending'
+        );
+        
+        // For each reservation, get all dates between check-in and check-out
+        activeReservations.forEach(reservation => {
+            const checkin = new Date(reservation.checkinDate);
+            const checkout = new Date(reservation.checkoutDate);
+            
+            // Add all dates from check-in to check-out (inclusive)
+            const currentDate = new Date(checkin);
+            while (currentDate <= checkout) {
+                bookedDates.push(currentDate.toISOString().split('T')[0]);
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        });
+        
+        // Remove duplicates
+        const uniqueBookedDates = [...new Set(bookedDates)];
+        
+        res.json({
+            success: true,
+            bookedDates: uniqueBookedDates
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error: ' + error.message
+        });
+    }
+});
+
 // READ - Get single reservation by ID
 app.get('/api/reservations/:id', (req, res) => {
     try {
