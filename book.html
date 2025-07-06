@@ -48,7 +48,7 @@
             <input type="text" class="date-input" id="checkin-date" placeholder="Check-in Date..." readonly />
           </div>
           <div class="date-input-group">
-            <label>Check-out Date: *</label>
+            <label>Check-out Date: *<label>
             <input type="text" class="date-input" id="checkout-date" placeholder="Check-out Date..." readonly />
           </div>
         </div>
@@ -110,8 +110,128 @@
           </div>
         </form>
       </div>
+
+      <!-- Payment Section -->
+      <div class="payment-section" id="payment-section" style="display: none;">
+        <h4>Payment Information</h4>
+        <!-- Booking Summary -->
+        <div class="booking-summary">
+          <h5>Booking Summary</h5>
+          <div class="summary-row">
+            <span>Package:</span>
+            <span id="summary-package"></span>
+          </div>
+          <div class="summary-row">
+            <span>Duration:</span>
+            <span id="summary-duration"></span>
+          </div>
+          <div class="summary-row">
+            <span>Guests:</span>
+            <span id="summary-guests"></span>
+          </div>
+          <div class="summary-row">
+            <span>Dates:</span>
+            <span id="summary-dates"></span>
+          </div>
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="summary-subtotal"></span>
+          </div>
+          <div class="summary-row">
+            <span>Total Amount:</span>
+            <span id="summary-total"></span>
+          </div>
+        </div>
+        <div class="payment-methods">
+          <div class="payment-method active" data-method="gcash">
+            <span class="payment-method-icon">💳</span>
+            <div class="payment-method-name">GCash</div>
+          </div>
+          <div class="payment-method" data-method="maya">
+            <span class="payment-method-icon">📱</span>
+            <div class="payment-method-name">Maya</div>
+          </div>
+          <div class="payment-method" data-method="card">
+            <span class="payment-method-icon">💳</span>
+            <div class="payment-method-name">Credit / Debit Card</div>
+          </div>
+          <div class="payment-method" data-method="bank">
+            <span class="payment-method-icon">🏦</span>
+            <div class="payment-method-name">Bank Transfer</div>
+          </div>
+        </div>
+
+        <div class="payment-form" id="payment-form">
+          <div id="gcash-form">
+            <div class="form-group">
+              <label for="gcash-number">GCash Mobile Number *</label>
+              <input type="tel" id="gcash-number" name="gcashNumber" placeholder="09XX XXX XXXX" required>
+            </div>
+            <div class="form-group">
+              <label for="gcash-name">Account Name *</label>
+              <input type="text" id="gcash-name" name="gcashName" required>
+            </div>
+          </div>
+          <div id="maya-form" style="display: none;">
+            <div class="form-group">
+              <label for="maya-number">Maya Mobile Number *</label>
+              <input type="tel" id="maya-number" name="mayaNumber" placeholder="09XX XXX XXXX" required>
+            </div>
+            <div class="form-group">
+              <label for="maya-name">Account Name *</label>
+              <input type="text" id="maya-name" name="mayaName" required>
+            </div>
+          </div>
+          <div id="card-form" style="display: none;">
+            <div class="form-group">
+              <label for="card-number">Card Number *</label>
+              <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-group">
+              <label for="card-name">Cardholder Name *</label>
+              <input type="text" id="card-name" name="cardName" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="card-expiry">Expiry Date *</label>
+                <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                <label for="card-cvv">CVV *</label>
+                <input type="text" id="card-cvv" name="cardCvv" placeholder="123" required>
+              </div>
+            </div>
+          </div>
+          
+          <div id="bank-form" style="display: none;">
+            <div class="form-group">
+              <label for="bank-name">Bank Name *</label>
+              <select id="bank-name" name="bankName" required>
+                <option value="" disabled selected>Select Bank</option>
+                <option value="bpi">Bank of the Philippine Islands (BPI)</option>
+                <option value="bdo">Banco de Oro (BDO)</option>
+                <option value="metrobank">Metrobank</option>
+                <option value="unionbank">UnionBank</option>
+                <option value="rcbc">RCBC</option>
+                <option value="seabank"> SeaBank</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="account-number">Account Number *</label>
+              <input type="text" id="account-number" name="accountNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="account-name">Account Name *</label>
+              <input type="text" id="account-name" name="accountName" required>
+            </div>
+          </div>
+          <div class="security-info">
+            <p>🔒 Your payment information is secure and encrypted. We never store your payment details.</p>
+          </div>
+        </div>
+        <button class="confirm-btn" id="confirm-reservation">Complete Booking</button>
+      </div>
       
-      <button class="confirm-btn" id="confirm-reservation" disabled>Confirm Reservation</button>
     </div>
   </div>
 
@@ -156,7 +276,7 @@
             </div>
         </div>
     </footer>
-
+    
     <!-- Floating Chat Button -->
     <div class="floating-chat-btn" id="chatBtn" role="button" aria-label="Open chat" title="Chat with us!">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
