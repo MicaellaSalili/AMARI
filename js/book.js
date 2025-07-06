@@ -317,11 +317,17 @@ async function submitReservation() {
       const result = await response.json();
       
       if (result.success) {
-        // Show success message
-        alert(`Reservation submitted successfully!\n\nReservation ID: ${result.reservation.id}\nPackage: ${packages[pkg]?.title || pkg}\nCheck-in: ${formatDate(selectedCheckin)}\nCheck-out: ${formatDate(selectedCheckout)}\nGuest: ${guestName}\nGuests: ${numberOfGuests}\nPayment Method: ${paymentMethod.toUpperCase()}\nTotal: ${getSelectedPackagePrice().formatted}\n\nWe will contact you soon to confirm your reservation and provide payment instructions.`);
-        
-        // Reset the form
-        resetBookingForm();
+        // Show success modal
+        showSuccessModal({
+          reservationId: result.reservation.id,
+          package: packages[pkg]?.title || pkg,
+          checkin: formatDate(selectedCheckin),
+          checkout: formatDate(selectedCheckout),
+          guest: guestName,
+          guests: numberOfGuests,
+          paymentMethod: paymentMethod.toUpperCase(),
+          total: getSelectedPackagePrice().formatted
+        });
       } else {
         alert('Failed to submit reservation: ' + (result.message || 'Unknown error'));
       }
@@ -725,6 +731,81 @@ document.addEventListener('DOMContentLoaded', function() {
       submitReservation();
     });
   }
+});
+
+// Success Modal Functions
+function showSuccessModal(data) {
+  const modal = document.getElementById('successModal');
+  
+  // Populate modal with reservation data
+  document.getElementById('modal-reservation-id').textContent = data.reservationId;
+  document.getElementById('modal-package').textContent = data.package;
+  document.getElementById('modal-checkin').textContent = data.checkin;
+  document.getElementById('modal-checkout').textContent = data.checkout;
+  document.getElementById('modal-guest').textContent = data.guest;
+  document.getElementById('modal-guests').textContent = data.guests;
+  document.getElementById('modal-payment').textContent = data.paymentMethod;
+  document.getElementById('modal-total').textContent = data.total;
+  
+  // Show modal with animation
+  modal.style.display = 'flex';
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 10);
+  
+  // Disable body scroll
+  document.body.style.overflow = 'hidden';
+}
+
+function hideSuccessModal() {
+  const modal = document.getElementById('successModal');
+  modal.classList.remove('show');
+  
+  setTimeout(() => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }, 300);
+}
+
+// Modal Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('successModal');
+  const closeBtn = document.getElementById('closeSuccessModal');
+  const newReservationBtn = document.getElementById('newReservationBtn');
+  
+  // Close modal button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      hideSuccessModal();
+      resetBookingForm();
+    });
+  }
+  
+  // New reservation button
+  if (newReservationBtn) {
+    newReservationBtn.addEventListener('click', function() {
+      hideSuccessModal();
+      resetBookingForm();
+    });
+  }
+  
+  // Close modal when clicking overlay
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        hideSuccessModal();
+        resetBookingForm();
+      }
+    });
+  }
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+      hideSuccessModal();
+      resetBookingForm();
+    }
+  });
 });
 
 // Responsive functionality for booking page

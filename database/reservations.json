@@ -18,5 +18,27 @@
     "bookingDate": "2025-07-06",
     "createdAt": "2025-07-06T10:09:59.411Z",
     "status": "pending"
+  },
+  {
+    "id": "1751810148753",
+    "guestName": "Ann Denise Tadeo",
+    "email": "ands@gmail.com",
+    "phone": "09413314444",
+    "numberOfGuests": 34,
+    "specialRequests": "",
+    "package": "day-tour",
+    "checkinDate": "2025-07-13",
+    "checkoutDate": "2025-07-13",
+    "paymentMethod": "card",
+    "paymentDetails": {
+      "cardNumber": "1234 5678 9101",
+      "cardName": "Ann Denise Tadeo",
+      "cardExpiry": "11/26",
+      "cardCvv": "123"
+    },
+    "totalAmount": 12500,
+    "bookingDate": "2025-07-06",
+    "createdAt": "2025-07-06T13:55:48.753Z",
+    "status": "pending"
   }
 ]
