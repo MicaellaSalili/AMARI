@@ -48,7 +48,7 @@
             <input type="text" class="date-input" id="checkin-date" placeholder="Check-in Date..." readonly />
           </div>
           <div class="date-input-group">
-            <label>Check-out Date: *<label>
+            <label>Check-out Date: *</label>
             <input type="text" class="date-input" id="checkout-date" placeholder="Check-out Date..." readonly />
           </div>
         </div>
@@ -109,6 +109,11 @@
             <textarea id="special-requests" name="specialRequests" rows="3" placeholder="Any special requests or requirements..."></textarea>
           </div>
         </form>
+      </div>
+
+      <!-- Confirm Button for Guest Form -->
+      <div class="guest-form-actions" id="guest-form-actions">
+        <button class="confirm-btn" id="confirm-reservation">Continue to Payment</button>
       </div>
 
       <!-- Payment Section -->
@@ -229,7 +234,7 @@
             <p>🔒 Your payment information is secure and encrypted. We never store your payment details.</p>
           </div>
         </div>
-        <button class="confirm-btn" id="confirm-reservation">Complete Booking</button>
+        <button class="confirm-btn" id="complete-booking-btn">Complete Booking</button>
       </div>
       
     </div>

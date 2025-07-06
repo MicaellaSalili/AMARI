@@ -47,6 +47,13 @@
                         <option value="overnight">Overnight</option>
                         <option value="night-tour">Night Tour</option>
                     </select>
+                    <select id="payment-filter">
+                        <option value="">All Payment Methods</option>
+                        <option value="gcash">GCash</option>
+                        <option value="maya">Maya</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
                     <input type="date" id="date-filter" placeholder="Filter by check-in date">
                     <button onclick="applyFilters()" class="filter-btn">Apply Filters</button>
                     <button onclick="clearFilters()" class="clear-btn">Clear</button>
@@ -106,6 +113,20 @@
                     <input type="number" id="edit-guests" min="1" max="20" required>
                 </div>
                 <div class="form-group">
+                    <label>Total Amount:</label>
+                    <input type="number" id="edit-total-amount" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Payment Method:</label>
+                    <select id="edit-payment-method">
+                        <option value="">Not specified</option>
+                        <option value="gcash">GCash</option>
+                        <option value="maya">Maya</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Status:</label>
                     <select id="edit-status" required>
                         <option value="pending">Pending</option>
@@ -117,6 +138,14 @@
                 <div class="form-group">
                     <label>Special Requests:</label>
                     <textarea id="edit-requests" rows="3"></textarea>
+                </div>
+                
+                <!-- Payment Details Section -->
+                <div class="payment-details-section">
+                    <h4>Payment Details</h4>
+                    <div id="edit-payment-details" class="payment-details-form">
+                        <!-- Payment details will be populated dynamically -->
+                    </div>
                 </div>
                 <div class="modal-actions">
                     <button type="submit" class="save-btn">Save Changes</button>

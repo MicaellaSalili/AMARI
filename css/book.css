@@ -576,6 +576,178 @@ body {
     font-weight: 500;
 }
 
+/* Booking progress indicator styles */
+.booking-progress {
+    display: none; /* Hidden by default, shown by JS on mobile */
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.progress-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: -50%;
+    width: 100%;
+    height: 2px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+
+.progress-step.completed:not(:last-child)::after {
+    background: #c59d5f;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-step.active .step-number {
+    background: #c59d5f;
+    color: white;
+}
+
+.progress-step.completed .step-number {
+    background: #38a169;
+    color: white;
+}
+
+.step-label {
+    font-size: 10px;
+    color: #718096;
+    font-weight: 500;
+    text-align: center;
+}
+
+.progress-step.active .step-label {
+    color: #c59d5f;
+    font-weight: 600;
+}
+
+.progress-step.completed .step-label {
+    color: #38a169;
+    font-weight: 600;
+}
+
+/* Validation message styles */
+.validation-message {
+    animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+    .calendar-day {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .payment-method {
+        min-height: 56px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        min-height: 44px;
+    }
+    
+    .select-dates-btn,
+    .clear-btn,
+    .confirm-btn {
+        min-height: 48px;
+    }
+}
+
+/* Better focus indicators for accessibility */
+.calendar-day:focus-visible,
+.payment-method:focus-visible,
+.select-dates-btn:focus-visible,
+.clear-btn:focus-visible,
+.confirm-btn:focus-visible {
+    outline: 2px solid #c59d5f;
+    outline-offset: 2px;
+}
+
+.form-group input:focus-visible,
+.form-group select:focus-visible,
+.form-group textarea:focus-visible {
+    outline: 2px solid #c59d5f;
+    outline-offset: 1px;
+}
+
+/* Progressive enhancement for booking progress */
+@media (max-width: 768px) {
+    .booking-progress {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-step {
+        margin: 0 2px;
+    }
+    
+    .step-number {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+    
+    .step-label {
+        font-size: 9px;
+    }
+    
+    .progress-step:not(:last-child)::after {
+        top: 12px;
+        height: 1px;
+    }
+}
+
+@media (max-width: 320px) {
+    .step-label {
+        font-size: 8px;
+    }
+    
+    .step-number {
+        width: 20px;
+        height: 20px;
+        font-size: 9px;
+    }
+    
+    .progress-step:not(:last-child)::after {
+        top: 10px;
+    }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .nav-links {
@@ -672,6 +844,10 @@ footer {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 40px;
     margin-bottom: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 }
 
 .footer-logo {
@@ -743,8 +919,53 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     opacity: 0.8;
     font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
+/* Footer Responsive Design */
+@media (max-width: 768px) {
+    footer {
+        padding: 40px 0 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+        padding: 0 20px;
+    }
+    
+    .footer-logo {
+        font-size: 1.5rem;
+    }
+    
+    .footer-bottom {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-logo {
+        font-size: 1.3rem;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .footer-content {
+        padding: 0 15px;
+    }
+    
+    .footer-bottom {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
 
 /* Animations */
 @keyframes fadeInUp {
