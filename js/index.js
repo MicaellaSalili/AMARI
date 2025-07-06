@@ -48,7 +48,8 @@ document.querySelectorAll('.book-now-btn, .view-rates-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
         if (btn.getAttribute('href') === '#book' || btn.classList.contains('view-rates-btn')) {
             e.preventDefault();
-            alert('Booking system coming soon! Please contact us directly for reservations.');
+            // Redirect to the booking page
+            window.location.href = 'rates.html';
         }
     });
 });
@@ -56,7 +57,8 @@ document.querySelectorAll('.book-now-btn, .view-rates-btn').forEach(btn => {
 // Gallery item click handlers
 document.querySelectorAll('.gallery-item, .experience-item').forEach(item => {
     item.addEventListener('click', () => {
-        alert('Image gallery feature coming soon!');
+        // Redirect to the rooms page
+        window.location.href = 'rooms.html';
     });
 });
 
