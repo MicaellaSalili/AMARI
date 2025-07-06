@@ -95,14 +95,31 @@ function selectDate(date, element) {
       isSelectingCheckout = true;
       document.getElementById('checkin-date').value = formatDate(date);
     } else if (isSelectingCheckout) {
-      if (date > selectedCheckin) {
-        selectedCheckout = date;
-        document.getElementById('checkout-date').value = formatDate(date);
-        isSelectingCheckout = false;
-        document.getElementById('confirm-reservation').disabled = false;
+      const params = new URLSearchParams(window.location.search);
+      const selectedPackage = params.get('package') || 'overnight';
+      
+      // For day tour, allow same check-in and check-out date
+      if (selectedPackage === 'day-tour') {
+        if (date >= selectedCheckin) {
+          selectedCheckout = date;
+          document.getElementById('checkout-date').value = formatDate(date);
+          isSelectingCheckout = false;
+          document.getElementById('confirm-reservation').disabled = false;
+        } else {
+          alert('Check-out date must be on or after check-in date');
+          return;
+        }
       } else {
-        alert('Check-out date must be after check-in date');
-        return;
+        // For other packages, check-out must be after check-in
+        if (date > selectedCheckin) {
+          selectedCheckout = date;
+          document.getElementById('checkout-date').value = formatDate(date);
+          isSelectingCheckout = false;
+          document.getElementById('confirm-reservation').disabled = false;
+        } else {
+          alert('Check-out date must be after check-in date');
+          return;
+        }
       }
     }
     generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
