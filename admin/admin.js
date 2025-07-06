@@ -5,6 +5,60 @@ let currentEditId = null;
 let currentDeleteId = null;
 let currentView = 'card'; // 'card' or 'table'
 
+// Check authentication on page load
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuthentication().then(isAuthenticated => {
+        if (isAuthenticated) {
+            loadReservations();
+            setupEventListeners();
+            setupLogoutButton();
+        } else {
+            // Redirect to login page
+            window.location.href = '/login';
+        }
+    });
+});
+
+// Check if user is authenticated
+async function checkAuthentication() {
+    try {
+        const response = await fetch('/api/auth/status');
+        const data = await response.json();
+        return data.authenticated;
+    } catch (error) {
+        console.error('Error checking authentication:', error);
+        return false;
+    }
+}
+
+// Setup logout functionality
+function setupLogoutButton() {
+    // Add logout button to admin header
+    const adminActions = document.querySelector('.admin-actions');
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'logout-btn';
+    logoutBtn.innerHTML = '🚪 Logout';
+    logoutBtn.onclick = handleLogout;
+    adminActions.appendChild(logoutBtn);
+}
+
+// Handle logout
+async function handleLogout() {
+    try {
+        const response = await fetch('/api/logout', {
+            method: 'POST'
+        });
+        
+        if (response.ok) {
+            window.location.href = '/login';
+        } else {
+            console.error('Logout failed');
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+}
+
 // Package information
 const packages = {
     "day-tour": {
@@ -23,12 +77,6 @@ const packages = {
         duration: "8PM - 6AM (12 hours)"
     }
 };
-
-// Load reservations when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadReservations();
-    setupEventListeners();
-});
 
 // Setup event listeners
 function setupEventListeners() {
@@ -80,6 +128,13 @@ async function loadReservations() {
     try {
         showLoading(true);
         const response = await fetch('/api/reservations');
+        
+        if (response.status === 401) {
+            // Unauthorized - redirect to login
+            window.location.href = '/login';
+            return;
+        }
+        
         const data = await response.json();
         
         if (data.success) {
