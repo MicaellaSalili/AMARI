@@ -70,6 +70,24 @@ function generateCalendar(year, month) {
   document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
 }
 
+// Update summary dates in booking summary when user selects dates
+function updateSummaryDates() {
+  const summaryDates = document.getElementById('summary-dates');
+  const checkinInput = document.getElementById('checkin-date');
+  const checkoutInput = document.getElementById('checkout-date');
+  if (checkinInput && checkoutInput && summaryDates) {
+    if (checkinInput.value && checkoutInput.value) {
+      summaryDates.textContent = `${checkinInput.value} - ${checkoutInput.value}`;
+    } else if (checkinInput.value) {
+      summaryDates.textContent = checkinInput.value;
+    } else {
+      summaryDates.textContent = 'Select dates';
+    }
+  }
+  // Update price if date changes
+  updatePackageDisplay();
+}
+
 function selectDate(date, element) {
   if (!selectedCheckin || isSelectingCheckout) {
     if (!selectedCheckin) {
@@ -88,6 +106,7 @@ function selectDate(date, element) {
       }
     }
     generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    updateSummaryDates(); // <-- Add this line to sync summary dates
   }
 }
 
@@ -203,7 +222,7 @@ async function submitReservation() {
     
     if (result.success) {
       // Show success message
-      alert(`Reservation submitted successfully!\n\nReservation ID: ${result.reservation.id}\nPackage: ${packages[pkg]?.title || pkg}\nCheck-in: ${formatDate(selectedCheckin)}\nCheck-out: ${formatDate(selectedCheckout)}\nGuest: ${guestName}\nTotal: ${packages[pkg]?.price || 'Contact for pricing'}\n\nWe will contact you soon to confirm your reservation.`);
+      alert(`Reservation submitted successfully!\n\nReservation ID: ${result.reservation.id}\nPackage: ${packages[pkg]?.title || pkg}\nCheck-in: ${formatDate(selectedCheckin)}\nCheck-out: ${formatDate(selectedCheckout)}\nGuest: ${guestName}\nTotal: ${getSelectedPackagePrice().formatted}\n\nWe will contact you soon to confirm your reservation.`);
       
       // Reset the form
       resetBookingForm();
@@ -242,15 +261,120 @@ function resetBookingForm() {
   generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 }
 
+// --- Payment Section Logic ---
+document.addEventListener('DOMContentLoaded', function() {
+  // Elements
+  const guestFormSection = document.getElementById('guest-form');
+  const paymentSection = document.getElementById('payment-section');
+  const reservationForm = document.getElementById('reservation-form');
+  const confirmBtn = document.getElementById('confirm-reservation');
+  const paymentMethods = document.querySelectorAll('.payment-method');
+  const numGuestsInput = document.getElementById('num-guests');
+  const summaryGuests = document.getElementById('summary-guests');
+  const summaryDates = document.getElementById('summary-dates');
+  const checkinInput = document.getElementById('checkin-date');
+  const checkoutInput = document.getElementById('checkout-date');
+
+  // Show guest form by default
+  if (guestFormSection) guestFormSection.style.display = 'block';
+
+  // Update summary guests
+  if (numGuestsInput && summaryGuests) {
+    numGuestsInput.addEventListener('input', function() {
+      summaryGuests.textContent = this.value;
+    });
+  }
+
+  // Update summary dates if you have date pickers
+  if (checkinInput && checkoutInput) {
+    checkinInput.addEventListener('change', updateSummaryDates);
+    checkoutInput.addEventListener('change', updateSummaryDates);
+  }
+
+  // Form validation
+  function validateGuestForm() {
+    let valid = true;
+    if (!reservationForm) return false;
+    reservationForm.querySelectorAll('input[required]').forEach(field => {
+      if (!field.value.trim()) valid = false;
+    });
+    return valid;
+  }
+
+  // Show payment section after guest info is valid
+  if (reservationForm) {
+    reservationForm.addEventListener('input', function() {
+      if (validateGuestForm()) {
+        if (paymentSection) paymentSection.style.display = 'block';
+        if (confirmBtn) confirmBtn.disabled = false;
+      } else {
+        if (paymentSection) paymentSection.style.display = 'none';
+        if (confirmBtn) confirmBtn.disabled = true;
+      }
+    });
+  }
+
+  // Payment method switching
+  if (paymentMethods.length) {
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', function() {
+        paymentMethods.forEach(m => m.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('#payment-form > div').forEach(form => {
+          form.style.display = 'none';
+        });
+        const selectedForm = document.getElementById(this.dataset.method + '-form');
+        if (selectedForm) selectedForm.style.display = 'block';
+      });
+    });
+  }
+
+  // Card formatting
+  const cardNumberInput = document.getElementById('card-number');
+  if (cardNumberInput) {
+    cardNumberInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+  }
+  const expiryInput = document.getElementById('card-expiry');
+  if (expiryInput) {
+    expiryInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    });
+  }
+
+  // Confirm booking
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', function(e) {
+      if (this.disabled) return;
+      alert('Booking confirmed! You will receive a confirmation email shortly.');
+      // Optionally reset form or redirect
+    });
+  }
+
+  // Initial state
+  if (paymentSection) paymentSection.style.display = 'none';
+  if (confirmBtn) confirmBtn.disabled = true;
+  updateSummaryDates();
+});
+
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
+// --- PACKAGE LOGIC WITH WEEKDAY/WEEKEND PRICING ---
 const params = new URLSearchParams(window.location.search);
 const pkg = params.get('package');
 
 const packages = {
   "day-tour": {
     title: "DAY TOUR",
-    price: "₱ 12,500",
+    price_weekday: 12500,
+    price_weekend: 15000,
     duration: "8AM - 5PM (9 hours)",
     features: [
       "20 pax maximum",
@@ -272,7 +396,8 @@ const packages = {
   },
   "overnight": {
     title: "OVERNIGHT",
-    price: "₱ 16,500",
+    price_weekday: 19500,
+    price_weekend: 22500,
     duration: "3PM - 12NN (21 hours)",
     features: [
       "20 pax maximum",
@@ -294,7 +419,8 @@ const packages = {
   },
   "night-tour": {
     title: "NIGHT TOUR",
-    price: "₱ 13,500",
+    price_weekday: 13500,
+    price_weekend: 16000,
     duration: "8PM - 6AM (12 hours)",
     features: [
       "20 pax maximum",
@@ -316,15 +442,90 @@ const packages = {
   }
 };
 
-if (pkg && packages[pkg]) {
-  document.querySelector('.package-title').textContent = packages[pkg].title;
-  document.querySelector('.package-price').textContent = packages[pkg].price;
-  if (document.querySelector('.package-duration')) {
-    document.querySelector('.package-duration').textContent = packages[pkg].duration;
+// Helper to determine if a date is weekend
+function isWeekend(dateStr) {
+  let date;
+  // Try to detect format: yyyy-mm-dd (from <input type="date">)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    date = new Date(year, month - 1, day);
+  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    // dd/mm/yyyy
+    const [day, month, year] = dateStr.split('/').map(Number);
+    date = new Date(year, month - 1, day);
+  } else {
+    return false; // Unknown format
   }
+  const dayOfWeek = date.getDay();
+  return dayOfWeek === 0 || dayOfWeek === 6; // Sunday or Saturday
+}
+
+// Helper to get the correct price based on selected package and date
+function getSelectedPackagePrice() {
+  const params = new URLSearchParams(window.location.search);
+  const pkgKey = params.get('package') || 'overnight';
+  const dayType = params.get('daytype'); // 'weekday' or 'weekend'
+  const pkg = packages[pkgKey];
+  if (!pkg) return { price: 0, formatted: "₱ 0" };
+
+  let price = pkg.price_weekday;
+
+  // Priority: URL daytype param > check-in date
+  if (dayType === 'weekend') {
+    price = pkg.price_weekend;
+  } else if (dayType === 'weekday') {
+    price = pkg.price_weekday;
+  } else {
+    // Fallback to check-in date logic
+    const checkinInput = document.getElementById('checkin-date');
+    if (checkinInput && checkinInput.value) {
+      if (isWeekend(checkinInput.value)) {
+        price = pkg.price_weekend;
+      }
+    }
+  }
+  return { price, formatted: `₱ ${price.toLocaleString()}` };
+}
+
+// Update package info and summary when package or date changes
+function updatePackageDisplay() {
+  const params = new URLSearchParams(window.location.search);
+  const pkgKey = params.get('package') || 'overnight';
+  const pkg = packages[pkgKey];
+
+  if (!pkg) return;
+
+  // Update package info section (if you have these elements)
+  const titleElem = document.querySelector('.package-title');
+  const priceElem = document.querySelector('.package-price');
+  const durationElem = document.querySelector('.package-duration');
   const featuresList = document.querySelector('.features-list');
-  if (featuresList) {
-    featuresList.innerHTML = packages[pkg].features.map(f => `<li>${f}</li>`).join('');
+  if (titleElem) titleElem.textContent = pkg.title;
+  if (priceElem) priceElem.textContent = getSelectedPackagePrice().formatted;
+  if (durationElem) durationElem.textContent = pkg.duration;
+  if (featuresList) featuresList.innerHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
+
+  // Update booking summary details
+  const summaryPackage = document.getElementById('summary-package');
+  const summaryDuration = document.getElementById('summary-duration');
+  if (summaryPackage) summaryPackage.textContent = pkg.title;
+  if (summaryDuration) summaryDuration.textContent = pkg.duration;
+
+  updateSummaryGuestsAndTotal();
+}
+
+function updateSummaryGuestsAndTotal() {
+  const numGuestsInput = document.getElementById('num-guests');
+  const summaryGuests = document.getElementById('summary-guests');
+  const summarySubtotal = document.getElementById('summary-subtotal');
+  const summaryTotal = document.getElementById('summary-total');
+  if (numGuestsInput && summaryGuests) {
+    summaryGuests.textContent = numGuestsInput.value;
+  }
+  if (summarySubtotal && summaryTotal) {
+    const pkgPrice = getSelectedPackagePrice();
+    summarySubtotal.textContent = pkgPrice.formatted;
+    summaryTotal.textContent = pkgPrice.formatted;
   }
 }
 
