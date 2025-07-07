@@ -297,6 +297,134 @@ nav {
     box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
 }
 
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  nav {
+    justify-content: space-between;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+    order: 3;
+  }
+  
+  .logo {
+    order: 1;
+  }
+}
+
+.mobile-nav-menu {
+  display: none;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-menu.active {
+  display: block;
+  top: 110px;
+}
+
+.mobile-nav-menu ul {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.mobile-nav-menu li {
+  margin-bottom: 15px;
+}
+
+.mobile-nav-menu .nav-link {
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.mobile-nav-menu .nav-link:hover {
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.mobile-nav-menu .book-now-btn {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  padding: 15px 25px;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+}
+
+/* Mobile Touch Improvements */
+@media (max-width: 768px) {
+  /* Increase touch targets */
+  .nav-link,
+  .book-now-btn,
+  .mobile-nav-menu .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Improve text readability */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Better button accessibility */
+  .book-btn,
+  .toggle-btn {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  /* Improve scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .nav-menu {

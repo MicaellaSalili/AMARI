@@ -1025,6 +1025,26 @@ nav {
   color: #2c3e50;
   cursor: pointer;
   padding: 5px;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  nav {
+    justify-content: space-between;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+    order: 3;
+  }
+  
+  .logo {
+    order: 1;
+  }
 }
 
 .mobile-nav-menu {
