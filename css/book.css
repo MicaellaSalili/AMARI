@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -778,75 +777,235 @@ nav {
 }
 
 /* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .calendar-grid {
+    gap: 0.3rem;
+  }
+
+  .date-inputs {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-    }
+  .nav-menu {
+    display: none;
+  }
 
-    .hero-content h1 {
-        font-size: 2rem;
-    }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
 
-    .main-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 2rem 1rem;
-    }
+  .hero-main-title {
+    font-size: 2rem;
+  }
 
-    .calendar-grid {
-        gap: 0.25rem;
-    }
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
 
-    .calendar-day {
-        font-size: 0.9rem;
-    }
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
 
-    .date-inputs {
-        grid-template-columns: 1fr;
-    }
+  .calendar-grid {
+    gap: 0.25rem;
+  }
 
-    .payment-section {
-        padding: 15px;
-    }
+  .calendar-day {
+    font-size: 0.9rem;
+  }
 
-    .payment-methods {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .date-inputs {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 
-    .form-row {
-        grid-template-columns: 1fr;
-    }
+  .payment-section {
+    padding: 15px;
+  }
+
+  .payment-methods {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .package-title {
+    font-size: 1.5rem;
+  }
+
+  .package-price {
+    font-size: 1.8rem;
+  }
+
+  .confirm-btn {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .calendar-section,
+  .right-column {
+    padding: 1.5rem;
+  }
+
+  .resort-image {
+    height: 250px;
+  }
 }
 
 @media (max-width: 480px) {
-    .floating-chat-btn {
-        bottom: 15px;
-        right: 15px;
-        width: 50px;
-        height: 50px;
-    }
+  .floating-chat-btn {
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+  }
 
-    .floating-chat-btn svg {
-        width: 30px;
-        height: 30px;
-    }
+  .floating-chat-btn svg {
+    width: 30px;
+    height: 30px;
+  }
 
-    .hero h1 {
-        font-size: 2rem;
-    }
+  .hero h1 {
+    font-size: 2rem;
+  }
 
-    .hero-subtitle {
-        font-size: 1rem;
-    }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
 
-    .logo {
-        font-size: 1.5rem;
-    }
+  .hero-main-title {
+    font-size: 1.8rem;
+  }
 
-    .gallery-grid,
-    .experience-grid {
-        grid-template-columns: 1fr;
-    }
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .main-content {
+    padding: 1.5rem 0.8rem;
+    gap: 1.5rem;
+  }
+
+  .calendar-section,
+  .right-column {
+    padding: 1rem;
+  }
+
+  .calendar-day {
+    font-size: 0.8rem;
+  }
+
+  .calendar-month {
+    font-size: 1rem;
+  }
+
+  .package-title {
+    font-size: 1.3rem;
+  }
+
+  .package-price {
+    font-size: 1.6rem;
+  }
+
+  .features-list li {
+    font-size: 0.9rem;
+  }
+
+  .resort-image {
+    height: 200px;
+  }
+
+  .payment-methods {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .payment-method {
+    padding: 10px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .confirm-btn {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .gallery-grid,
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 360px) {
+  .main-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .calendar-section,
+  .right-column {
+    padding: 0.8rem;
+  }
+
+  .hero-main-title {
+    font-size: 1.6rem;
+  }
+
+  .package-title {
+    font-size: 1.2rem;
+  }
+
+  .package-price {
+    font-size: 1.4rem;
+  }
+
+  .calendar-day {
+    font-size: 0.7rem;
+    padding: 4px;
+  }
+
+  .calendar-month {
+    font-size: 0.9rem;
+  }
+
+  .resort-image {
+    height: 180px;
+  }
+
+  .confirm-btn {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .floating-chat-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .floating-chat-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+}
 
     .payment-section {
         padding: 10px;
@@ -855,6 +1014,69 @@ nav {
     .payment-methods {
         grid-template-columns: 1fr;
     }
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-nav-menu {
+  display: none;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-menu.active {
+  display: block;
+  top: 110px;
+}
+
+.mobile-nav-menu ul {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.mobile-nav-menu li {
+  margin-bottom: 15px;
+}
+
+.mobile-nav-menu .nav-link {
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.mobile-nav-menu .nav-link:hover {
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.mobile-nav-menu .book-now-btn {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  padding: 15px 25px;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
 }
 
 /* Footer */
@@ -1270,4 +1492,54 @@ footer {
         text-align: left;
         font-weight: 700;
     }
+}
+
+/* Mobile Touch Improvements */
+@media (max-width: 768px) {
+  /* Increase touch targets */
+  .nav-link,
+  .book-now-btn,
+  .mobile-nav-menu .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Improve text readability */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Better spacing for touch */
+  .calendar-day,
+  .payment-method {
+    margin-bottom: 10px;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Better button accessibility */
+  .confirm-btn,
+  .btn,
+  .select-dates-btn,
+  .clear-btn {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  /* Calendar touch improvements */
+  .calendar-day {
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  /* Improve scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
 }

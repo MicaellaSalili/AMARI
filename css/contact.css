@@ -799,6 +799,22 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  .contact-info,
+  .map-section {
+    min-height: 600px;
+  }
+}
+
 @media (max-width: 992px) {
   .contact-grid {
     grid-template-columns: 1fr;
@@ -807,6 +823,11 @@ footer {
   
   .hero-title {
     font-size: 2.8rem;
+  }
+
+  .contact-info,
+  .map-section {
+    min-height: 550px;
   }
 }
 
@@ -863,6 +884,25 @@ footer {
     width: 26px;
     height: 26px;
   }
+
+  .contact-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .contact-icon {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .contact-details h3 {
+    font-size: 1.2rem;
+  }
+
+  .contact-details p {
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -878,6 +918,10 @@ footer {
   
   .hero-title {
     font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
   }
   
   .section-title {
@@ -902,5 +946,170 @@ footer {
   .floating-chat-btn svg {
     width: 24px;
     height: 24px;
+  }
+
+  .contact-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .contact-details h3 {
+    font-size: 1.1rem;
+  }
+
+  .contact-details p {
+    font-size: 0.9rem;
+  }
+
+  .section-description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .contact-info,
+  .map-section {
+    padding: 20px 15px;
+    min-height: 350px;
+  }
+
+  .contact-item {
+    padding: 15px 10px;
+  }
+
+  .map-iframe {
+    min-height: 200px;
+  }
+
+  .floating-chat-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .floating-chat-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .contact-details h3 {
+    font-size: 1rem;
+  }
+
+  .contact-details p {
+    font-size: 0.85rem;
+  }
+
+  .section-description {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-nav-menu {
+  display: none;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-menu.active {
+  display: block;
+  top: 110px;
+}
+
+.mobile-nav-menu ul {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.mobile-nav-menu li {
+  margin-bottom: 15px;
+}
+
+.mobile-nav-menu .nav-link {
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.mobile-nav-menu .nav-link:hover {
+  background: rgba(44, 62, 80, 0.1);
+}
+
+.mobile-nav-menu .book-now-btn {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  padding: 15px 25px;
+}
+
+/* Mobile Touch Improvements */
+@media (max-width: 768px) {
+  /* Increase touch targets */
+  .nav-link,
+  .book-now-btn,
+  .mobile-nav-menu .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Improve text readability */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Better spacing for touch */
+  .contact-item {
+    margin-bottom: 20px;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Improve scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Better map interaction on mobile */
+  .map-iframe {
+    pointer-events: auto;
+    touch-action: manipulation;
   }
 }
